@@ -1,17 +1,25 @@
 <?php 
 
-
 if(isset($_POST['submit'])){
 
-    $to = "dominique_mueller@gmx.ch"; // this is your Email address
+
+    $to = "mara_tomaschett@bluewin.ch"; // this is your Email address
     $from = $_POST['email']; // this is the sender's Email address
     $name = $_POST['name'];
     $subject = "Du hast eine Nachricht via maratomaschett.ch bekommen";
     $message = $name  . " hat folgendes geschrieben:" . "\n\n" . $_POST['message'];
+    $message2 = "Versandbestätigung für Deine Nachricht über maratomaschett.ch" . " \n\n " . $_POST['message'];
 
     $headers = "From:" . $from;
+    $headers2 = "From:" . $to;
     mail($to,$subject,$message,$headers);
-    echo "Deine Nachricht wurde versendet. Vielen Dank " . $first_name . ", Ich melde mich sobald wie möglich bei dir.";
+    // mail($from,$subject2,$message2,$headers2); // sends a copy of the message to the sender
+    $msg= "msgsend"; 
+    $_POST['submit'] = '';
+}
+
+else{
+	$msg="msgNotSend";
 }
 
 ?>
@@ -146,10 +154,11 @@ if(isset($_POST['submit'])){
 
 					<header class="align-center">
 						<h2>Vielen Dank für Deine Nachricht!</h2>
-						<p></p>
+						<p>
+						</p>
 					</header>										
 
-					<form action="" method="post" class="customform">
+					<form action="#messagebanner" method="post" class="customform">
 						<div class="row uniform">
 							<div class="6u 12u$(xsmall)">
 								<input type="text" name="name" id="name" value="" placeholder="Di Name" />
@@ -169,6 +178,9 @@ if(isset($_POST['submit'])){
 								<ul class="actions">
 									<li><input type="submit" name="submit" value="Nachricht schickä" /></li>
 								</ul>
+								<span class="<?php echo "msg-info " . $msg;?>">
+									<em>Vielen Dank für deine Nachricht. Ich melde mich bei dir! </em>
+								</span>
 							</div>
 						</div>
 					</form>
@@ -285,6 +297,8 @@ body #messagebanner .customform  textarea {
     z-index: 1;
 }
 .custombuttoncontainer {text-align: left;}
-
+span.msg-info {color: #20CC82}
+span.msg-info.msgsend {display: inline-block;}
+span.msg-info {display: none;}
 </style>		
 </html>
